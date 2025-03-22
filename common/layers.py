@@ -212,6 +212,9 @@ class Convolution:
         self.db = None
 
     def forward(self, x):
+        if x.ndim == 3:
+            x = x.reshape(x.shape[0], 1, x.shape[1], x.shape[2])
+        
         FN, C, FH, FW = self.W.shape
         N, C, H, W = x.shape
         out_h = 1 + int((H + 2*self.pad - FH) / self.stride)
